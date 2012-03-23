@@ -48,6 +48,7 @@ namespace Eto.Platform.GtkSharp.Forms
 			var textcell = new Gtk.CellRendererText ();
 			col.PackStart (textcell, true);
 			col.SetAttributes (textcell, "text", 1);
+			col.AddAttribute (textcell, "foreground", 3);
 			tree.AppendColumn (col);
 			
 			tree.ShowExpanders = true;
@@ -104,9 +105,9 @@ namespace Eto.Platform.GtkSharp.Forms
 				
 				Gtk.TreeIter? parentIter = null;
 				if (parent != null)
-					parentIter = model.AppendValues (parent.Value, child, child.Text, pixbuf);
+					parentIter = model.AppendValues	(parent.Value, child, child.Text, pixbuf, child.TextColor == Color.Transparent ? null : Generator.Convert(child.TextColor).ToString());
 				else
-					parentIter = model.AppendValues (child, child.Text, pixbuf);
+					parentIter = model.AppendValues (child, child.Text, pixbuf, child.TextColor == Color.Transparent ? null : Generator.Convert(child.TextColor).ToString());
 				if (child.Expandable) {
 					Populate (parentIter, child);
 					if (child.Expanded) {

@@ -5,6 +5,7 @@ using Eto.Collections;
 using System.Windows.Markup;
 #endif
 using System.Collections.Specialized;
+using Eto.Drawing;
 
 namespace Eto.Forms
 {
@@ -15,6 +16,8 @@ namespace Eto.Forms
 		bool Expandable { get; }
 		
 		ITreeItem Parent { get; set; }
+
+		Color TextColor { get; set; }
 	}
 
 	public class TreeItemCollection : DataStoreCollection<ITreeItem>
@@ -50,6 +53,8 @@ namespace Eto.Forms
 		public virtual bool Expandable { get { return this.Count > 0; } }
 		
 		public virtual bool Expanded { get; set; }
+
+		public virtual Color TextColor { get; set; }
 		
 		public virtual ITreeItem this[int index]
 		{
@@ -62,6 +67,7 @@ namespace Eto.Forms
 		
 		public TreeItem ()
 		{
+			TextColor = Color.Transparent;
 		}
 		
 		public TreeItem (IEnumerable<ITreeItem> children)

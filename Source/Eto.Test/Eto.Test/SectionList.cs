@@ -5,6 +5,7 @@ using System.Linq;
 using Eto.Test.Sections.Controls;
 using Eto.Test.Sections.Drawing;
 using Eto.Test.Sections.Layouts;
+using Eto.Drawing;
 
 namespace Eto.Test
 {
@@ -57,6 +58,8 @@ namespace Eto.Test
 		public bool Expandable { get { return false; } }
 
 		public ITreeItem Parent { get; set; }
+
+		public Color TextColor { get; set; } 
 		#endregion
 
 		#region IImageListItem implementation

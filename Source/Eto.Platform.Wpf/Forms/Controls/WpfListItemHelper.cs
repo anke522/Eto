@@ -35,10 +35,33 @@ namespace Eto.Platform.Wpf.Forms.Controls
 			}
 		}
 
+		class ColorConverter : swd.IValueConverter
+		{
+			public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+			{
+				var item = value as ITreeItem;
+
+				sw.Media.Brush lCol = sw.SystemColors.WindowTextBrush;
+				if (item != null)
+				{
+					var col = item.TextColor;
+					if (col !=  Eto.Drawing.Color.Transparent)
+						lCol = new sw.Media.SolidColorBrush(Generator.Convert(col));
+				}
+				return lCol;
+			}
+
+			public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+			{
+				throw new NotImplementedException();
+			}
+		}
+
 		public static sw.FrameworkElementFactory TextBlock ()
 		{
 			var factory = new sw.FrameworkElementFactory (typeof (swc.TextBlock));
 			factory.SetBinding (swc.TextBlock.TextProperty, new sw.Data.Binding { Converter = new TextConverter () });
+			factory.SetBinding (swc.TextBlock.ForegroundProperty, new sw.Data.Binding { Converter = new ColorConverter () });
 			return factory;
 		}
 

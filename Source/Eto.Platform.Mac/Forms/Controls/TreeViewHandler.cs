@@ -4,6 +4,7 @@ using Eto.Forms;
 using MonoMac.Foundation;
 using System.Collections.Generic;
 using Eto.Platform.Mac.Forms.Menu;
+using Eto.Drawing;
 
 namespace Eto.Platform.Mac.Forms.Controls
 {
@@ -18,10 +19,11 @@ namespace Eto.Platform.Mac.Forms.Controls
 		class EtoTreeItem : MacImageData
 		{
 			Dictionary<int, EtoTreeItem> items;
-			ITreeItem item;
+			ITreeItem item; // << this is the original; Generator.ConvertNS(item.TextColor) returns the right NSColor.
 			
 			public EtoTreeItem ()
 			{
+				
 			}
 			
 			public EtoTreeItem (IntPtr ptr)
@@ -135,6 +137,18 @@ namespace Eto.Platform.Mac.Forms.Controls
 				
 				var myitem = item as EtoTreeItem;
 				return myitem.Item.Count;
+			}
+
+			[Export("outlineView:willDisplayCell:forTableColumn:item:")]
+			public void outlineViewWillDisplayCellForTableColumnItem(NSOutlineView outlineView, NSObject cell, NSTableColumn tableColumn, NSObject item)
+			{
+				if (cell is NSTextFieldCell) 
+				{
+					EtoTreeItem i = item as EtoTreeItem;
+					var col = i.Item.TextColor;
+					if (col != Color.Transparent)
+						((NSTextFieldCell)cell).TextColor = Generator.ConvertNS(col);
+				}
 			}
 		}
 		

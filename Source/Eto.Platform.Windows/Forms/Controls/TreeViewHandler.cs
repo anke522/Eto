@@ -57,6 +57,8 @@ namespace Eto.Platform.Windows.Forms.Controls
 				var child = item[i];
 				var node = nodes.Add (child.Key, child.Text, GetImageKey (child.Image));
 				node.Tag = child;
+				if (child.TextColor != Color.Transparent)
+					node.ForeColor = Generator.Convert(child.TextColor);
 				
 				if (child.Expandable) {
 					if (child.Expanded) {
