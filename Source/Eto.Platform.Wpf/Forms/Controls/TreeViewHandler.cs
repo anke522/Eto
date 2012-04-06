@@ -27,8 +27,7 @@ namespace Eto.Platform.Wpf.Forms.Controls
 			Control.ItemTemplate = template;
 
 			var style = new sw.Style (typeof (swc.TreeViewItem));
-			style.Setters.Add (new sw.Setter (swc.TreeViewItem.IsExpandedProperty, new swd.Binding { Converter = new WpfTreeItemHelper.IsExpandedConverter (), Mode = swd.BindingMode.OneWay }));
-			style.Setters.Add(new sw.Setter(swc.TreeViewItem.IsExpandedProperty, new swd.Binding { Converter = new WpfTreeItemHelper.IsExpandedConverter(), Mode = swd.BindingMode.OneWay }));
+			style.Setters.Add (new sw.Setter (swc.TreeViewItem.IsExpandedProperty, new swd.Binding { Path = new sw.PropertyPath("Expanded"), Mode = swd.BindingMode.TwoWay }));
 			Control.ItemContainerStyle = style;
 
 			Control.SelectedItemChanged += delegate {

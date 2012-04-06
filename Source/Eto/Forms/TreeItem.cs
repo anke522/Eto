@@ -52,9 +52,31 @@ namespace Eto.Forms
 		
 		public virtual bool Expandable { get { return this.Count > 0; } }
 		
-		public virtual bool Expanded { get; set; }
+		private bool expanded;
+		public virtual bool Expanded
+		{
+			get { return expanded; }
+			set
+			{
+				expanded = value;
+				OnPropertyChanged("Expanded");
+			}
+		}
 
-		public virtual Color TextColor { get; set; }
+		private Color textcolor;
+
+		public virtual Color TextColor
+		{
+			get
+			{
+				return textcolor;
+			}
+			set
+			{
+				textcolor = value;
+				OnPropertyChanged("TextColor");
+			}
+		}
 		
 		public virtual ITreeItem this[int index]
 		{

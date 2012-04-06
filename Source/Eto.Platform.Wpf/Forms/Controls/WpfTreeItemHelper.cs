@@ -31,18 +31,6 @@ namespace Eto.Platform.Wpf.Forms.Controls
 			}
 		}
 
-		public class IsExpandedConverter : swd.IValueConverter
-		{
-			public object Convert (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-			{
-				var item = value as ITreeItem;
-				return item.Expanded;
-			}
-
-			public object ConvertBack (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-			{
-				return value;
-			}
-		}
+		
 	}
 }

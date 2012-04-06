@@ -2,6 +2,7 @@ using System;
 using Eto.Drawing;
 #if DESKTOP
 using System.Windows.Markup;
+using System.ComponentModel;
 #endif
 
 namespace Eto.Forms
@@ -16,21 +17,47 @@ namespace Eto.Forms
 #if DESKTOP
 	[ContentProperty("Text")]
 #endif
-	public class ListItem : IListItem
+	public class ListItem : IListItem, INotifyPropertyChanged
 	{
-		string key;
-		
-		public string Text { get; set; }
+		string key, text;
+
+		public string Text
+		{
+			get { return text; }
+			set
+			{
+				text = value;
+				OnPropertyChanged("Text");
+				if (key == null)
+					OnPropertyChanged("Key");
+			}
+		}
 
 		public string Key {
 			get { return key ?? Text; }
-			set { key = value; }
+			set { key = value; OnPropertyChanged("Key"); }
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		public void OnPropertyChanged(string Name)
+		{
+			if (PropertyChanged != null)
+				PropertyChanged(this, new PropertyChangedEventArgs(Name));
 		}
 	}
 	
 	public class ImageListItem : ListItem, IImageListItem
 	{
-		public Image Image { get; set; }
+		Image image;
+		public Image Image
+		{
+			get { return image; }
+			set
+			{
+				image = value;
+				OnPropertyChanged("Image");
+			}
+		}
 	}
 	
 #if DESKTOP

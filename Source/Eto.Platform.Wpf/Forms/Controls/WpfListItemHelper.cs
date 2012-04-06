@@ -21,30 +21,14 @@ namespace Eto.Platform.Wpf.Forms.Controls
 			return factory;
 		}
 
-		class TextConverter : swd.IValueConverter
-		{
-			public object Convert (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-			{
-				var item = value as IListItem;
-				return (item != null) ? item.Text : null;
-			}
-
-			public object ConvertBack (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-			{
-				throw new NotImplementedException ();
-			}
-		}
-
 		class ColorConverter : swd.IValueConverter
 		{
 			public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 			{
-				var item = value as ITreeItem;
-
 				sw.Media.Brush lCol = sw.SystemColors.WindowTextBrush;
-				if (item != null)
+				if (value != null)
 				{
-					var col = item.TextColor;
+					var col = (Eto.Drawing.Color)value;
 					if (col !=  Eto.Drawing.Color.Transparent)
 						lCol = new sw.Media.SolidColorBrush(Generator.Convert(col));
 				}
@@ -60,8 +44,8 @@ namespace Eto.Platform.Wpf.Forms.Controls
 		public static sw.FrameworkElementFactory TextBlock ()
 		{
 			var factory = new sw.FrameworkElementFactory (typeof (swc.TextBlock));
-			factory.SetBinding (swc.TextBlock.TextProperty, new sw.Data.Binding { Converter = new TextConverter () });
-			factory.SetBinding (swc.TextBlock.ForegroundProperty, new sw.Data.Binding { Converter = new ColorConverter () });
+			factory.SetBinding (swc.TextBlock.TextProperty, new sw.Data.Binding { Path = new sw.PropertyPath("Text"), Mode = swd.BindingMode.TwoWay });
+			factory.SetBinding(swc.TextBlock.ForegroundProperty, new sw.Data.Binding { Path = new sw.PropertyPath("TextColor"), Mode = swd.BindingMode.OneWay, Converter = new ColorConverter() });
 			return factory;
 		}
 
